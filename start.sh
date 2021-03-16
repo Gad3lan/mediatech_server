@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run --rm -it -p 8080:80 mediatech_server
+docker run --rm -it -p 8080:8080 mediatech_server

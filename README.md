@@ -25,13 +25,13 @@ To start a devlopement server you need to type this two command in two different
 - For compiling automaticly on save :
 
 ```sh
-$ npx watch
+$ npm watch
 ```
 
 - For restarting the server automaticly on changes :
 
 ```sh
-$ npx nodemon
+$ npm nodemon
 ```
 
 ## Deployment :

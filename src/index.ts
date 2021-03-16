@@ -7,8 +7,8 @@ const main = async () => {
     res.send("Hello world !");
   });
 
-  app.listen(80, () => {
-    console.log("server started on port 80");
+  app.listen(8080, () => {
+    console.log("server started on http://localhost:8080/");
   });
 };
 

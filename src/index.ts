@@ -3,8 +3,18 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/user";
+import { createConnection } from "typeorm";
 
 const main = async () => {
+  await createConnection({
+    type: "postgres",
+    username:"test",
+    password: "test",
+    logging: true,
+    synchronize: true,
+    entities: [],
+  });
+
   const app = express();
 
   const apollo_server = new ApolloServer({

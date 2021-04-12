@@ -20,7 +20,13 @@ You need `nodejs` and `npm` installed on your computer.
 
 The entry point of the code is `src/index.ts`.
 
-To start a devlopement server you need to type this two command in two different terminal opend in this folder :
+To start a devlopement server you need to type this three commands in three differents terminals opend in this folder :
+
+- For launching the dev database :
+
+```sh
+$ npm devdb
+```
 
 - For compiling automaticly on save :
 

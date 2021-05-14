@@ -1,9 +1,9 @@
 import { Field, ObjectType } from "type-graphql";
-import { Entity, PrimaryColumn } from "typeorm";
+import { BaseEntity, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
 @ObjectType("RessourceGenre")
-export class RessourceGenre {
+export class RessourceGenre extends BaseEntity {
   // genre : string pk
 
   @Field()

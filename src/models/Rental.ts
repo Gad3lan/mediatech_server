@@ -1,5 +1,6 @@
-import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Field, Int, ObjectType } from "type-graphql";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+
 import { Ressource } from "./Ressource";
 import { User } from "./User";
 
@@ -11,7 +12,7 @@ export enum State {
 
 @Entity()
 @ObjectType("Rental")
-export class Rental {
+export class Rental extends BaseEntity {
   // rtl_id : int pk
   // membership_id : string, fk user, NOT NULL
   // cote : string, fk ressource, NOT NULL
@@ -22,7 +23,7 @@ export class Rental {
   // returned : bool, NOT NULL, default false
   // check(initial_date < return_date)
 
-  @PrimaryColumn()
+  @PrimaryColumn({ type: "int" })
   rtl_id!: number;
 
   @Field()
@@ -41,15 +42,15 @@ export class Rental {
   @Column()
   return_date!: Date;
 
-  @Field()
-  @Column()
+  @Field(() => Int)
+  @Column({ type: "int" })
   initial_state!: State;
 
-  @Field()
-  @Column()
+  @Field(() => Int)
+  @Column({ type: "int" })
   return_state?: State;
 
   @Field()
-  @Column()
+  @Column({ default: false })
   returned!: boolean;
 }

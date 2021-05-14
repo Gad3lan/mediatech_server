@@ -1,5 +1,5 @@
-import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Field, Int, ObjectType } from "type-graphql";
+import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
 
 export enum Role {
   not_connected = 0,
@@ -10,7 +10,7 @@ export enum Role {
 
 @Entity()
 @ObjectType("User")
-export class User {
+export class User extends BaseEntity {
   // membership_id: string, pk
   // email : string, NOT NULL
   // password_hash : string,
@@ -26,17 +26,17 @@ export class User {
   email!: string;
 
   @Column()
-  password_hash!: string;
+  password_hash?: string;
 
-  @Field()
-  @Column()
+  @Field(() => Int)
+  @Column({ type: "int", default: 0 })
   nb_strikes!: number;
 
-  @Field()
-  @Column()
+  @Field(() => Int)
+  @Column({ type: "int", default: 0 })
   nb_rentals!: number;
 
-  @Field()
-  @Column()
+  @Field(() => Int)
+  @Column({ type: "int", default: Role.not_connected })
   roles!: Role;
 }

@@ -4,6 +4,23 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/user";
 import { createConnection } from "typeorm";
+import { Rental } from "./models/Rental";
+import { Ressource } from "./models/Ressource";
+import { RessourceGenre } from "./models/RessourceGenre";
+import { RessourceType } from "./models/RessourceType";
+import { Role, User } from "./models/User";
+
+const test_db = async () => {
+  const user = User.create({
+    membership_id: "id",
+    email: "@",
+    password_hash: "hash",
+    nb_strikes: 0,
+    nb_rentals: 1,
+    roles: Role.connected,
+  });
+  await user.save();
+};
 
 const main = async () => {
   await createConnection({
@@ -12,8 +29,10 @@ const main = async () => {
     password: "test",
     logging: true,
     synchronize: true,
-    entities: [],
+    entities: [Rental, Ressource, RessourceGenre, RessourceType, User],
   });
+
+  await test_db();
 
   const app = express();
 

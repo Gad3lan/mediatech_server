@@ -1,12 +1,19 @@
-import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryColumn } from "typeorm";
+import { Field, Int, ObjectType } from "type-graphql";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryColumn,
+} from "typeorm";
 
 import { RessourceType } from "./RessourceType";
 import { RessourceGenre } from "./RessourceGenre";
 
 @Entity()
 @ObjectType("Ressource")
-export class Ressource {
+export class Ressource extends BaseEntity {
   // cote : string, pk
   // type : string fk ressource_type, NOT NULL
   // genre : string fk ressource_genre, NOT NULL
@@ -46,8 +53,8 @@ export class Ressource {
   @Column()
   edition_date!: Date;
 
-  @Field()
-  @Column()
+  @Field(() => Int)
+  @Column({ type: "int" })
   quantity!: number;
 
   @Field()

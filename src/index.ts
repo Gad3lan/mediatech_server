@@ -8,16 +8,14 @@ import { Rental } from "./models/Rental";
 import { Ressource } from "./models/Ressource";
 import { RessourceGenre } from "./models/RessourceGenre";
 import { RessourceType } from "./models/RessourceType";
-import { Role, User } from "./models/User";
+import { User } from "./models/User";
+import { RessourceResolver } from "./resolvers/ressource";
+import { RentalResolver } from "./resolvers/rentals";
 
 const test_db = async () => {
   const user = User.create({
-    membership_id: "id",
-    email: "@",
-    password_hash: "hash",
-    nb_strikes: 0,
-    nb_rentals: 1,
-    roles: Role.connected,
+    membership_id: "testid",
+    email: "test@sweg.com",
   });
   await user.save();
 };
@@ -38,7 +36,7 @@ const main = async () => {
 
   const apollo_server = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [RentalResolver, RessourceResolver, UserResolver],
     }),
     context: ({ req, res }) => ({ req, res }),
     playground: true,

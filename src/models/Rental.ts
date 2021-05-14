@@ -25,24 +25,31 @@ export class Rental {
   @PrimaryColumn()
   rtl_id!: number;
 
+  @Field()
   @ManyToOne(() => User, (user) => user.membership_id)
   membership_id!: User;
 
+  @Field()
   @ManyToOne(() => Ressource, (ressource) => ressource.cote)
   cote!: Ressource;
 
+  @Field()
   @Column()
   initial_date!: Date;
 
+  @Field()
   @Column()
   return_date!: Date;
 
+  @Field()
   @Column()
   initial_state!: State;
 
+  @Field()
   @Column()
   return_state?: State;
 
+  @Field()
   @Column()
   returned!: boolean;
 }

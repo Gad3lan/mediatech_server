@@ -8,7 +8,7 @@ import { createConnection } from "typeorm";
 const main = async () => {
   await createConnection({
     type: "postgres",
-    username:"test",
+    username: "test",
     password: "test",
     logging: true,
     synchronize: true,

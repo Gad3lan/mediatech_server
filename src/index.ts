@@ -16,6 +16,7 @@ const test_db = async () => {
   const user = User.create({
     membership_id: "testid",
     email: "test@sweg.com",
+    password_hash: "hash",
   });
   await user.save();
 };

@@ -25,19 +25,19 @@ To start a devlopement server you need to type this three commands in three diff
 - For launching the dev database :
 
 ```sh
-$ npm devdb
+$ npm run devdb
 ```
 
 - For compiling automaticly on save :
 
 ```sh
-$ npm watch
+$ npm run watch
 ```
 
 - For restarting the server automaticly on changes :
 
 ```sh
-$ npm nodemon
+$ npm run nodemon
 ```
 
 ## Deployment :

@@ -3,15 +3,17 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToMany,
+  JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
 } from "typeorm";
 
 import { RessourceType } from "./RessourceType";
 import { RessourceGenre } from "./RessourceGenre";
+import { Rental } from "./Rental";
 
-@Entity()
+@Entity("ressource")
 @ObjectType("Ressource")
 export class Ressource extends BaseEntity {
   // cote : string, pk
@@ -26,42 +28,48 @@ export class Ressource extends BaseEntity {
   // resume : string, NOT NULL
 
   @Field()
-  @PrimaryColumn()
+  @PrimaryColumn({ name: "cote" })
   cote!: string;
 
+  @Field(() => [Rental])
+  @OneToMany(() => Rental, (rental) => rental.ressource)
+  rentals?: Rental[];
+
   @Field()
-  @ManyToMany(() => RessourceType, (type) => type.type)
+  @ManyToOne(() => RessourceType, (type) => type.ressources)
+  @JoinColumn({ name: "type" })
   type!: RessourceType;
 
   @Field()
-  @ManyToOne(() => RessourceGenre, (genre) => genre.genre)
+  @ManyToOne(() => RessourceGenre, (genre) => genre.ressources)
+  @JoinColumn({ name: "genre" })
   genre!: RessourceGenre;
 
   @Field()
-  @Column()
+  @Column({ name: "title" })
   title!: string;
 
   @Field()
-  @Column()
+  @Column({ name: "author" })
   author!: string;
 
   @Field()
-  @Column()
+  @Column({ name: "editor" })
   editor!: string;
 
   @Field()
-  @Column()
+  @Column({ name: "edition_date" })
   edition_date!: Date;
 
   @Field(() => Int)
-  @Column({ type: "int" })
+  @Column({ name: "quantity", type: "int" })
   quantity!: number;
 
   @Field()
-  @Column()
+  @Column({ name: "cover" })
   cover!: string;
 
   @Field()
-  @Column()
+  @Column({ name: "resume" })
   resume!: string;
 }

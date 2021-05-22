@@ -15,6 +15,7 @@ import { RentalResolver } from "./resolvers/rentals";
 const test_db = async () => {
   const user = User.create({
     membership_id: "testid",
+    name: "name",
     email: "test@sweg.com",
     password_hash: "hash",
   });
@@ -27,7 +28,7 @@ const main = async () => {
     username: "test",
     password: "test",
     logging: true,
-    synchronize: true,
+    // synchronize: true,
     entities: [Rental, Ressource, RessourceGenre, RessourceType, User],
   });
 

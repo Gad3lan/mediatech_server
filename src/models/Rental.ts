@@ -1,5 +1,12 @@
 import { Field, Int, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from "typeorm";
 
 import { Ressource } from "./Ressource";
 import { User } from "./User";
@@ -10,7 +17,7 @@ export enum State {
   bad = 2,
 }
 
-@Entity()
+@Entity("rental")
 @ObjectType("Rental")
 export class Rental extends BaseEntity {
   // rtl_id : int pk
@@ -23,34 +30,36 @@ export class Rental extends BaseEntity {
   // returned : bool, NOT NULL, default false
   // check(initial_date < return_date)
 
-  @PrimaryColumn({ type: "int" })
+  @PrimaryColumn({ name: "rtl_id", type: "int" })
   rtl_id!: number;
 
-  @Field()
-  @ManyToOne(() => User, (user) => user.membership_id)
-  membership_id!: User;
+  @Field(() => User)
+  @ManyToOne(() => User, (user) => user.rentals)
+  @JoinColumn({ name: "membership_id" })
+  user!: User;
 
   @Field()
-  @ManyToOne(() => Ressource, (ressource) => ressource.cote)
-  cote!: Ressource;
+  @ManyToOne(() => Ressource, (ressource) => ressource.rentals)
+  @JoinColumn({ name: "cote" })
+  ressource!: Ressource;
 
   @Field()
-  @Column()
+  @Column({ name: "initial_date" })
   initial_date!: Date;
 
   @Field()
-  @Column()
+  @Column({ name: "return_date" })
   return_date!: Date;
 
   @Field(() => Int)
-  @Column({ type: "int" })
+  @Column({ name: "initial_state", type: "int" })
   initial_state!: State;
 
   @Field(() => Int)
-  @Column({ type: "int" })
+  @Column({ name: "return_state", type: "int" })
   return_state?: State;
 
   @Field()
-  @Column({ default: false })
+  @Column({ name: "returned", default: false })
   returned!: boolean;
 }

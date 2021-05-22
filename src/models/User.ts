@@ -27,7 +27,7 @@ export class User extends BaseEntity {
 
   @Field(() => [Rental], { nullable: true })
   @OneToMany(() => Rental, (rental) => rental.user)
-  rentals?: Rental[];
+  rentals?: Promise<Rental[]>;
 
   @Field()
   @Column({ name: "name" })
@@ -50,10 +50,10 @@ export class User extends BaseEntity {
 
   @Field(() => Role)
   @Column({
-    name: "roles",
+    name: "role",
     type: "enum",
     enum: Role,
     default: Role.not_connected,
   })
-  roles!: Role;
+  role!: Role;
 }

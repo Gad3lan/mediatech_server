@@ -14,9 +14,9 @@ export class RessourceResolver {
     @Arg("genre", () => String, { nullable: true }) genre: string | undefined,
     @Arg("cote", () => String, { nullable: true }) cote: string | undefined,
     @Arg("quantity", () => Int, { nullable: true })
-    quantity: number | undefined,
-    @Arg("disponibility", () => Boolean, { nullable: true })
-    disponibility: boolean | undefined
+    quantity: number | undefined
+    // @Arg("disponibility", () => Boolean, { nullable: true })
+    // disponibility: boolean | undefined
   ): Promise<Ressource[]> {
     const where: any = {};
 
@@ -46,14 +46,15 @@ export class RessourceResolver {
   ) {
     const ressource = await Ressource.findOne({ where: { cote } });
 
-    if (ressource === undefined) throw "Ressource don't exist !";
+    if (!ressource) throw "Ressource don't exist !";
 
-    if (title !== undefined) ressource.title = title;
-    if (author !== undefined) ressource.author = author;
-    if (editor !== undefined) ressource.editor = editor;
-    if (edition_date !== undefined) ressource.edition_date = edition_date;
-    // if (genre !== undefined) ressource.genre = genre;
-    if (quantity !== undefined) ressource.quantity = quantity;
+    if (type) (await ressource.type).type = type;
+    if (title) ressource.title = title;
+    if (author) ressource.author = author;
+    if (editor) ressource.editor = editor;
+    if (edition_date) ressource.edition_date = edition_date;
+    if (genre) (await ressource.genre).genre = genre;
+    if (quantity) ressource.quantity = quantity;
 
     return ressource.save();
   }

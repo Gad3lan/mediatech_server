@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from "type-graphql";
+import { Field, ObjectType, registerEnumType } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -12,10 +12,11 @@ import { Ressource } from "./Ressource";
 import { User } from "./User";
 
 export enum State {
-  good = 0,
-  medium = 1,
-  bad = 2,
+  good = "good",
+  medium = "medium",
+  bad = "bad",
 }
+registerEnumType(State, { name: "State" });
 
 @Entity("rental")
 @ObjectType("Rental")
@@ -36,12 +37,12 @@ export class Rental extends BaseEntity {
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.rentals)
   @JoinColumn({ name: "membership_id" })
-  user!: User;
+  user!: Promise<User>;
 
-  @Field()
+  @Field(() => Ressource)
   @ManyToOne(() => Ressource, (ressource) => ressource.rentals)
   @JoinColumn({ name: "cote" })
-  ressource!: Ressource;
+  ressource!: Promise<Ressource>;
 
   @Field()
   @Column({ name: "initial_date" })
@@ -51,12 +52,12 @@ export class Rental extends BaseEntity {
   @Column({ name: "return_date" })
   return_date!: Date;
 
-  @Field(() => Int)
-  @Column({ name: "initial_state", type: "int" })
+  @Field(() => State)
+  @Column({ name: "initial_state", type: "enum", enum: State })
   initial_state!: State;
 
-  @Field(() => Int, { nullable: true })
-  @Column({ name: "return_state", type: "int" })
+  @Field(() => State, { nullable: true })
+  @Column({ name: "return_state", type: "enum", enum: State })
   return_state?: State;
 
   @Field()

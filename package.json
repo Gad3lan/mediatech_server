@@ -7,7 +7,7 @@
     "start": "node dist/index.js",
     "watch": "tsc --watch",
     "nodemon": "nodemon",
-    "devdb": "docker run -it -p 5432:5432 -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test postgres"
+    "devdb": "docker run -it -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres postgres"
   },
   "repository": {
     "type": "git",

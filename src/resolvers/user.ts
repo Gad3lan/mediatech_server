@@ -37,7 +37,7 @@ export class UserResolver {
     if (name) user.name = name;
     if (email) user.email = email;
     if (nb_strikes) user.nb_strikes = nb_strikes;
-    if (roles) user.roles = roles;
+    if (roles) user.role = roles;
 
     return await user.save();
   }

@@ -13,5 +13,5 @@ export class RessourceType extends BaseEntity {
 
   @Field(() => [Ressource], { nullable: true })
   @OneToMany(() => Ressource, (ressource) => ressource.type)
-  ressources?: Ressource[];
+  ressources?: Promise<Ressource[]>;
 }

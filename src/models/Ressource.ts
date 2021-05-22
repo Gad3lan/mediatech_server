@@ -33,17 +33,17 @@ export class Ressource extends BaseEntity {
 
   @Field(() => [Rental], { nullable: true })
   @OneToMany(() => Rental, (rental) => rental.ressource)
-  rentals?: Rental[];
+  rentals?: Promise<Rental[]>;
 
-  @Field()
+  @Field(() => RessourceType)
   @ManyToOne(() => RessourceType, (type) => type.ressources)
   @JoinColumn({ name: "type" })
-  type!: RessourceType;
+  type!: Promise<RessourceType>;
 
-  @Field()
+  @Field(() => RessourceGenre)
   @ManyToOne(() => RessourceGenre, (genre) => genre.ressources)
   @JoinColumn({ name: "genre" })
-  genre!: RessourceGenre;
+  genre!: Promise<RessourceGenre>;
 
   @Field()
   @Column({ name: "title" })
@@ -73,6 +73,6 @@ export class Ressource extends BaseEntity {
   @Column({ name: "resume" })
   resume!: string;
 
-  @Field(() => Boolean)
-  disponibility!: boolean;
+  // @Field(() => Boolean)
+  // disponibility!: boolean;
 }

@@ -12,27 +12,14 @@ import { User } from "./models/User";
 import { RessourceResolver } from "./resolvers/ressource";
 import { RentalResolver } from "./resolvers/rentals";
 
-const test_db = async () => {
-  const user = User.create({
-    membership_id: "testid",
-    name: "name",
-    email: "test@sweg.com",
-    password_hash: "hash",
-  });
-  await user.save();
-};
-
 const main = async () => {
   await createConnection({
     type: "postgres",
-    username: "test",
-    password: "test",
+    username: "postgres",
+    password: "postgres",
     logging: true,
-    synchronize: true,
     entities: [Rental, Ressource, RessourceGenre, RessourceType, User],
   });
-
-  await test_db();
 
   const app = express();
 

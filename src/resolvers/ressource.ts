@@ -18,18 +18,17 @@ export class RessourceResolver {
     @Arg("disponibility", () => Boolean, { nullable: true })
     disponibility: boolean | undefined
   ): Promise<Ressource[]> {
-    return Ressource.find({
-      where: {
-        type,
-        title,
-        author,
-        editor,
-        edition_date,
-        genre,
-        cote,
-        quantity,
-      },
-    });
+    const where: any = {};
+
+    if (type) where.type = type;
+    if (title) where.title = title;
+    if (author) where.author = author;
+    if (editor) where.editor = editor;
+    if (edition_date) where.edition_date = edition_date;
+    if (genre) where.genre = genre;
+    if (quantity) where.quantity = quantity;
+
+    return Ressource.find({ where });
   }
 
   @Mutation(() => Ressource)
@@ -43,24 +42,17 @@ export class RessourceResolver {
     @Arg("genre", () => String, { nullable: true }) genre: string | undefined,
     @Arg("cote", () => String) cote: string | undefined,
     @Arg("quantity", () => Int, { nullable: true })
-    quantity: number | undefined,
-    @Arg("disponibility", () => Boolean, { nullable: true })
-    disponibility: boolean | undefined
+    quantity: number | undefined
   ) {
     const ressource = await Ressource.findOne({ where: { cote } });
 
     if (ressource === undefined) throw "Ressource don't exist !";
 
     if (title !== undefined) ressource.title = title;
-
     if (author !== undefined) ressource.author = author;
-
     if (editor !== undefined) ressource.editor = editor;
-
-    if (edition_date !== undefined) ressource.edition_date !== edition_date;
-
+    if (edition_date !== undefined) ressource.edition_date = edition_date;
     // if (genre !== undefined) ressource.genre = genre;
-
     if (quantity !== undefined) ressource.quantity = quantity;
 
     return ressource.save();

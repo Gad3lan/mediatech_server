@@ -72,4 +72,7 @@ export class Ressource extends BaseEntity {
   @Field()
   @Column({ name: "resume" })
   resume!: string;
+
+  @Field(() => Boolean)
+  disponibility!: boolean;
 }

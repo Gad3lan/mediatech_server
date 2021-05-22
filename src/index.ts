@@ -28,7 +28,7 @@ const main = async () => {
     username: "test",
     password: "test",
     logging: true,
-    // synchronize: true,
+    synchronize: true,
     entities: [Rental, Ressource, RessourceGenre, RessourceType, User],
   });
 

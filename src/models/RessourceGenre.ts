@@ -11,7 +11,7 @@ export class RessourceGenre extends BaseEntity {
   @PrimaryColumn({ name: "genre" })
   genre!: string;
 
-  @Field(() => [Ressource])
+  @Field(() => [Ressource], { nullable: true })
   @OneToMany(() => Ressource, (ressource) => ressource.genre)
   ressources?: Ressource[];
 }

@@ -55,7 +55,7 @@ export class Rental extends BaseEntity {
   @Column({ name: "initial_state", type: "int" })
   initial_state!: State;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   @Column({ name: "return_state", type: "int" })
   return_state?: State;
 

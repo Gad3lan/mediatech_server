@@ -31,7 +31,7 @@ export class Ressource extends BaseEntity {
   @PrimaryColumn({ name: "cote" })
   cote!: string;
 
-  @Field(() => [Rental])
+  @Field(() => [Rental], { nullable: true })
   @OneToMany(() => Rental, (rental) => rental.ressource)
   rentals?: Rental[];
 

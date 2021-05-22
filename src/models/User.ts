@@ -25,7 +25,7 @@ export class User extends BaseEntity {
   @PrimaryColumn({ name: "membership_id" })
   membership_id!: string;
 
-  @Field(() => [Rental])
+  @Field(() => [Rental], { nullable: true })
   @OneToMany(() => Rental, (rental) => rental.user)
   rentals?: Rental[];
 

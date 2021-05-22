@@ -11,7 +11,7 @@ export class RessourceType extends BaseEntity {
   @PrimaryColumn({ name: "type" })
   type!: string;
 
-  @Field(() => [Ressource])
+  @Field(() => [Ressource], { nullable: true })
   @OneToMany(() => Ressource, (ressource) => ressource.type)
   ressources?: Ressource[];
 }

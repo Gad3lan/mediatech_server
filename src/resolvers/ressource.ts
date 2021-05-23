@@ -17,13 +17,10 @@ export class RessourceResolver {
     @Arg("genre", () => String, { nullable: true }) genre: string | undefined,
     @Arg("cote", () => String, { nullable: true }) cote: string | undefined,
     @Arg("quantity", () => Int, { nullable: true })
-    quantity: number | undefined,
+    quantity: number | undefined
     // @Arg("disponibility", () => Boolean, { nullable: true })
     // disponibility: boolean | undefined
-    @Ctx() ctx: Context<User>
   ): Promise<Ressource[]> {
-    new Guard(Role.not_connected, ctx);
-
     const where: any = {};
 
     if (type) where.type = type;

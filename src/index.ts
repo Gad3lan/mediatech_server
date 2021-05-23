@@ -15,6 +15,8 @@ import { RessourceResolver } from "./resolvers/ressource";
 import { RentalResolver } from "./resolvers/rentals";
 import { buildContext, GraphQLLocalStrategy } from "graphql-passport";
 import passport from "passport";
+import { RessourceGenreResolver } from "./resolvers/ressourcegenre";
+import { RessourceTypeResolver } from "./resolvers/ressourcetype";
 
 const main = async () => {
   await createConnection({
@@ -75,7 +77,13 @@ const main = async () => {
 
   const apollo_server = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [RentalResolver, RessourceResolver, UserResolver],
+      resolvers: [
+        RentalResolver,
+        RessourceResolver,
+        RessourceGenreResolver,
+        RessourceTypeResolver,
+        UserResolver,
+      ],
     }),
     context: ({ req, res }) => buildContext({ req, res }),
     playground: true,

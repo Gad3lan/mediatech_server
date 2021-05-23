@@ -79,7 +79,8 @@ export class UserResolver {
     if (!user) throw "Wrong email or membership_id";
 
     await user.set_password(password);
-    user.role = Role.connected;
+
+    if (user.role === Role.not_connected) user.role = Role.connected;
 
     return await user.save();
   }
@@ -110,7 +111,8 @@ export class UserResolver {
 
     if (!user) return { exist: false };
 
-    if (user.password_hash) return { exist: true, first_connexion: true };
+    if (user.role === Role.not_connected)
+      return { exist: true, first_connexion: true };
 
     return { exist: true, first_connexion: false };
   }

@@ -5,7 +5,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 
 import { Ressource } from "./Ressource";
@@ -31,7 +31,7 @@ export class Rental extends BaseEntity {
   // returned : bool, NOT NULL, default false
   // check(initial_date < return_date)
 
-  @PrimaryColumn({ name: "rtl_id", type: "int" })
+  @PrimaryGeneratedColumn("increment", { name: "rtl_id", type: "int" })
   rtl_id!: number;
 
   @Field(() => User)

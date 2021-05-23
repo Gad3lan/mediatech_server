@@ -47,9 +47,13 @@ export class User extends BaseEntity {
   @Column({ name: "nb_strikes", type: "int", default: 0 })
   nb_strikes!: number;
 
+  static NB_MAX_STRIKES = 3;
+
   @Field(() => Int)
   @Column({ name: "nb_rentals", type: "int", default: 0 })
   nb_rentals!: number;
+
+  static NB_MAX_RENTALS = 10;
 
   @Field(() => Role)
   @Column({

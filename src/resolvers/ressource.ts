@@ -32,7 +32,7 @@ export class RessourceResolver {
   }
 
   @Mutation(() => Ressource)
-  async updateRessource(
+  async update_ressource(
     @Arg("type", () => String, { nullable: true }) type: string | undefined,
     @Arg("title", () => String, { nullable: true }) title: string | undefined,
     @Arg("author", () => String, { nullable: true }) author: string | undefined,

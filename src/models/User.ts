@@ -1,6 +1,9 @@
 import { Field, Int, ObjectType, registerEnumType } from "type-graphql";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { Rental } from "./Rental";
+import { pbkdf2 } from "crypto";
+
+const SALT = "4gAt*fYW^=r2#LrQ4R!rAVzNnek3ucW4";
 
 export enum Role {
   not_connected = "not_connected",
@@ -56,4 +59,21 @@ export class User extends BaseEntity {
     default: Role.not_connected,
   })
   role!: Role;
+
+  hash(password: string): Promise<string> {
+    return new Promise((done, reject) =>
+      pbkdf2(password, SALT, 100000, 64, "sha512", (err, res) => {
+        if (err) reject(err);
+        done(res.toString());
+      })
+    );
+  }
+
+  async set_password(password: string): Promise<void> {
+    this.password_hash = await this.hash(password);
+  }
+
+  async validate_pasword(password: string): Promise<boolean> {
+    return this.password_hash === (await this.hash(password));
+  }
 }

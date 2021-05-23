@@ -1,6 +1,24 @@
 import { Context } from "graphql-passport/lib/buildContext";
-import { Resolver, Query, Arg, Int, Mutation, Ctx } from "type-graphql";
+import {
+  Resolver,
+  Query,
+  Arg,
+  Int,
+  Mutation,
+  Ctx,
+  ObjectType,
+  Field,
+} from "type-graphql";
 import { Role, User } from "../models/User";
+
+@ObjectType("EmailInfo")
+export class EmailInfo {
+  @Field()
+  exist!: boolean;
+
+  @Field({ nullable: true })
+  first_connexion?: boolean;
+}
 
 @Resolver(User)
 export class UserResolver {
@@ -53,7 +71,7 @@ export class UserResolver {
 
     if (!user) throw "Wrong email or membership_id";
 
-    user.set_password(password);
+    await user.set_password(password);
 
     return await user.save();
   }
@@ -74,5 +92,25 @@ export class UserResolver {
     await login(user);
 
     return user;
+  }
+
+  @Query(() => EmailInfo)
+  async check_email(
+    @Arg("email", () => String) email: string
+  ): Promise<EmailInfo> {
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) return { exist: false };
+
+    if (user.password_hash) return { exist: true, first_connexion: true };
+
+    return { exist: true, first_connexion: false };
+  }
+
+  @Query(() => User)
+  async me(@Ctx() { isAuthenticated, getUser }: Context<User>): Promise<User> {
+    if (!isAuthenticated()) throw "You must be connected";
+
+    return getUser();
   }
 }

@@ -14,7 +14,7 @@ export class Guard {
     const user = ctx.getUser();
 
     if (
-      (role_values.get(role) as number) < (role_values.get(user.role) as number)
+      (role_values.get(role) as number) > (role_values.get(user.role) as number)
     )
       throw "You don't have permition to do that";
   }

@@ -9,14 +9,14 @@ export class UserResolver {
     @Arg("email", () => String, { nullable: true }) email: string | undefined,
     @Arg("nb_strikes", () => Int, { nullable: true })
     nb_strikes: number | undefined,
-    @Arg("roles", () => String, { nullable: true }) roles: string | undefined
+    @Arg("role", () => Role, { nullable: true }) role: Role | undefined
   ): Promise<User[]> {
     const where: any = {};
 
     if (name) where.name = name;
     if (email) where.email = email;
     if (nb_strikes) where.nb_strikes = nb_strikes;
-    if (roles) where.roles = roles;
+    if (role) where.role = role;
 
     return User.find({ where });
   }
@@ -28,7 +28,7 @@ export class UserResolver {
     @Arg("email", () => String, { nullable: true }) email: string | undefined,
     @Arg("nb_strikes", () => Int, { nullable: true })
     nb_strikes: number | undefined,
-    @Arg("roles", () => Role, { nullable: true }) roles: Role | undefined
+    @Arg("role", () => Role, { nullable: true }) role: Role | undefined
   ): Promise<User> {
     const user = await User.findOne({ where: { membership_id } });
 
@@ -37,7 +37,7 @@ export class UserResolver {
     if (name) user.name = name;
     if (email) user.email = email;
     if (nb_strikes) user.nb_strikes = nb_strikes;
-    if (roles) user.role = roles;
+    if (role) user.role = role;
 
     return await user.save();
   }

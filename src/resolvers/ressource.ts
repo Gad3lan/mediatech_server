@@ -1,5 +1,8 @@
-import { Resolver, Query, Arg, Int, Mutation } from "type-graphql";
+import { Context } from "graphql-passport/lib/buildContext";
+import { Resolver, Query, Arg, Int, Mutation, Ctx } from "type-graphql";
 import { Ressource } from "../models/Ressource";
+import { Role, User } from "../models/User";
+import { Guard } from "./guard";
 
 @Resolver(Ressource)
 export class RessourceResolver {
@@ -14,10 +17,13 @@ export class RessourceResolver {
     @Arg("genre", () => String, { nullable: true }) genre: string | undefined,
     @Arg("cote", () => String, { nullable: true }) cote: string | undefined,
     @Arg("quantity", () => Int, { nullable: true })
-    quantity: number | undefined
+    quantity: number | undefined,
     // @Arg("disponibility", () => Boolean, { nullable: true })
     // disponibility: boolean | undefined
+    @Ctx() ctx: Context<User>
   ): Promise<Ressource[]> {
+    new Guard(Role.not_connected, ctx);
+
     const where: any = {};
 
     if (type) where.type = type;
@@ -42,8 +48,11 @@ export class RessourceResolver {
     @Arg("genre", () => String, { nullable: true }) genre: string | undefined,
     @Arg("cote", () => String) cote: string | undefined,
     @Arg("quantity", () => Int, { nullable: true })
-    quantity: number | undefined
+    quantity: number | undefined,
+    @Ctx() ctx: Context<User>
   ) {
+    new Guard(Role.manager, ctx);
+
     const ressource = await Ressource.findOne({ where: { cote } });
 
     if (!ressource) throw "Ressource don't exist !";

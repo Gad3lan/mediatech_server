@@ -10,6 +10,7 @@ import {
   Field,
 } from "type-graphql";
 import { Role, User } from "../models/User";
+import { Guard } from "./guard";
 
 @ObjectType("EmailInfo")
 export class EmailInfo {
@@ -28,8 +29,11 @@ export class UserResolver {
     @Arg("email", () => String, { nullable: true }) email: string | undefined,
     @Arg("nb_strikes", () => Int, { nullable: true })
     nb_strikes: number | undefined,
-    @Arg("role", () => Role, { nullable: true }) role: Role | undefined
+    @Arg("role", () => Role, { nullable: true }) role: Role | undefined,
+    @Ctx() ctx: Context<User>
   ): Promise<User[]> {
+    new Guard(Role.manager, ctx);
+
     const where: any = {};
 
     if (name) where.name = name;
@@ -47,8 +51,11 @@ export class UserResolver {
     @Arg("email", () => String, { nullable: true }) email: string | undefined,
     @Arg("nb_strikes", () => Int, { nullable: true })
     nb_strikes: number | undefined,
-    @Arg("role", () => Role, { nullable: true }) role: Role | undefined
+    @Arg("role", () => Role, { nullable: true }) role: Role | undefined,
+    @Ctx() ctx: Context<User>
   ): Promise<User> {
+    new Guard(Role.manager, ctx);
+
     const user = await User.findOne({ where: { membership_id } });
 
     if (!user) throw "User don't exist";
@@ -72,6 +79,7 @@ export class UserResolver {
     if (!user) throw "Wrong email or membership_id";
 
     await user.set_password(password);
+    user.role = Role.connected;
 
     return await user.save();
   }

@@ -8,6 +8,6 @@ echo "compiling typescript..."
 npx tsc
 
 echo "building docker image..."
-docker build -t mediatech_server .
+docker-compose build
 
 echo "done"

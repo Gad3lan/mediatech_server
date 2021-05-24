@@ -8,6 +8,7 @@ echo "compiling typescript..."
 npx tsc
 
 echo "building docker image..."
+mkdir postgres-data -p
 docker-compose build
 
 echo "done"

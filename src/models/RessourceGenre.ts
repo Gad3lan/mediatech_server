@@ -12,6 +12,6 @@ export class RessourceGenre extends BaseEntity {
   genre!: string;
 
   @Field(() => [Ressource], { nullable: true })
-  @OneToMany(() => Ressource, (ressource) => ressource.genre)
-  ressources?: Promise<Ressource[]>;
+  @OneToMany(() => Ressource, (ressource) => ressource.genre, { lazy: true })
+  ressources!: Ressource[];
 }

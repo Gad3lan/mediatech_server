@@ -7,6 +7,7 @@ const role_values = new Map<Role, number>([
   [Role.manager, 2],
   [Role.admin, 3],
 ]);
+
 export class Guard {
   constructor(role: Role, ctx: Context<User>) {
     if (!ctx.isAuthenticated()) throw "You must be connected";

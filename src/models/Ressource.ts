@@ -31,19 +31,19 @@ export class Ressource extends BaseEntity {
   @PrimaryColumn({ name: "cote" })
   cote!: string;
 
-  @Field(() => [Rental], { nullable: true })
-  @OneToMany(() => Rental, (rental) => rental.ressource)
-  rentals?: Promise<Rental[]>;
+  @Field(() => [Rental])
+  @OneToMany(() => Rental, (rental) => rental.ressource, { lazy: true })
+  rentals!: Rental[];
 
   @Field(() => RessourceType)
-  @ManyToOne(() => RessourceType, (type) => type.ressources)
+  @ManyToOne(() => RessourceType, (type) => type.ressources, { lazy: true })
   @JoinColumn({ name: "type" })
-  type!: Promise<RessourceType>;
+  type!: RessourceType;
 
   @Field(() => RessourceGenre)
-  @ManyToOne(() => RessourceGenre, (genre) => genre.ressources)
+  @ManyToOne(() => RessourceGenre, (genre) => genre.ressources, { lazy: true })
   @JoinColumn({ name: "genre" })
-  genre!: Promise<RessourceGenre>;
+  genre!: RessourceGenre;
 
   @Field()
   @Column({ name: "title" })
@@ -58,7 +58,7 @@ export class Ressource extends BaseEntity {
   editor!: string;
 
   @Field()
-  @Column({ name: "edition_date" })
+  @Column({ name: "edition_date", type: "date" })
   edition_date!: Date;
 
   @Field(() => Int)

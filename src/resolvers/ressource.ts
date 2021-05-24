@@ -54,12 +54,12 @@ export class RessourceResolver {
 
     if (!ressource) throw "Ressource don't exist !";
 
-    if (type) (await ressource.type).type = type;
+    if (type) ressource.type.type = type;
     if (title) ressource.title = title;
     if (author) ressource.author = author;
     if (editor) ressource.editor = editor;
     if (edition_date) ressource.edition_date = edition_date;
-    if (genre) (await ressource.genre).genre = genre;
+    if (genre) ressource.genre.genre = genre;
     if (quantity) ressource.quantity = quantity;
 
     return ressource.save();

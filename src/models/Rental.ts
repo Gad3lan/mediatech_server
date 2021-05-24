@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType } from "type-graphql";
+import { Field, Int, ObjectType, registerEnumType } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -31,18 +31,19 @@ export class Rental extends BaseEntity {
   // returned : bool, NOT NULL, default false
   // check(initial_date < return_date)
 
+  @Field(() => Int)
   @PrimaryGeneratedColumn("increment", { name: "rtl_id", type: "int" })
   rtl_id!: number;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.rentals)
+  @ManyToOne(() => User, (user) => user.rentals, { lazy: true })
   @JoinColumn({ name: "membership_id" })
-  user!: Promise<User>;
+  user!: User;
 
   @Field(() => Ressource)
-  @ManyToOne(() => Ressource, (ressource) => ressource.rentals)
+  @ManyToOne(() => Ressource, (ressource) => ressource.rentals, { lazy: true })
   @JoinColumn({ name: "cote" })
-  ressource!: Promise<Ressource>;
+  ressource!: Ressource;
 
   @Field()
   @Column({ name: "initial_date" })

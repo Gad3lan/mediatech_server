@@ -31,7 +31,7 @@ export class RentalResolver {
 
     if (!ressource) throw "Ressource don't exist";
 
-    const rental = new Rental();
+    const rental = Rental.create();
 
     rental.user = user;
     rental.ressource = ressource;
@@ -44,7 +44,7 @@ export class RentalResolver {
     await rental.save();
 
     ++user.nb_rentals;
-    user.save();
+    await user.save();
 
     return rental;
   }

@@ -58,7 +58,7 @@ export class Ressource extends BaseEntity {
   editor!: string;
 
   @Field()
-  @Column({ name: "edition_date", type: "date" })
+  @Column({ name: "edition_date" })
   edition_date!: Date;
 
   @Field(() => Int)

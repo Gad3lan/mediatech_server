@@ -1,5 +1,6 @@
 import "./type";
 import "reflect-metadata";
+import "dotenv-safe/config";
 import express from "express";
 import session from "express-session";
 import { ApolloServer } from "apollo-server-express";
@@ -21,8 +22,7 @@ import { RessourceTypeResolver } from "./resolvers/ressourcetype";
 const main = async () => {
   await createConnection({
     type: "postgres",
-    username: "postgres",
-    password: "postgres",
+    url: process.env.DATABASE_URL,
     logging: true,
     entities: [Rental, Ressource, RessourceGenre, RessourceType, User],
   });

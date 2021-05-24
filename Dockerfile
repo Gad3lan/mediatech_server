@@ -2,6 +2,10 @@ FROM node
 
 COPY package*.json ./
 
+COPY .env.example ./
+
+COPY .env.prod .env
+
 RUN npm install
 
 COPY dist dist
